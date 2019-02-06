@@ -1,0 +1,38 @@
+
+@{
+  Layout = null;
+}
+
+@model ASPNETMVC_AddressBook.ViewModels.AccountViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <title>Login</title>
+</head>
+<body>
+  @using (Html.BeginForm("Register", "Login", FormMethod.Post))
+  {
+    <table cellpadding="2" cellspacing="2">
+      <tr>
+        <td>User Name</td>
+        <td>@Html.TextBoxFor(model => model.Account.UserName)</td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td>@Html.TextBoxFor(model => model.Account.Password)</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>@Html.TextBoxFor(model => model.Account.Email)</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" value="Save" /></td>
+      </tr>
+    </table>
+  }
+</body>
+</html>

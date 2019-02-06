@@ -1,0 +1,142 @@
+
+
+@{
+  Layout = null;
+}
+
+@model ASPNETMVC_AddressBook.ViewModels.AccountViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap Simple Login Form</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    .login-form {
+      width: 340px;
+      margin: 50px auto;
+    }
+
+      .login-form form {
+        margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+      }
+
+      .login-form h2 {
+        margin: 0 0 15px;
+      }
+
+    .form-control, .btn {
+      min-height: 38px;
+      border-radius: 2px;
+    }
+
+    .btn {
+      font-size: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-form container-fluid">
+    <form action="/Account/Index" method="post" id="frmLogin">
+      <h2 class="text-center">Log in</h2>
+
+      <div class="form-group">
+        <div class="col-md-12 input-group">
+          @Html.TextBoxFor(model => model.Account.UserName, new { @class = "form-control", @placeholder = "UserName" })
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-12 input-group">
+          @Html.TextBoxFor(model => model.Account.Password, new { @class = "form-control", @placeholder = "Password" })
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-12 input-group">
+          @Html.TextBoxFor(model => model.Account.Email, new { @class = "form-control", @placeholder = "email" })
+        </div>
+      </div>
+      <div class="form-group input-group">
+        <div class="col-md-12">
+          <button type="button" class="btn btn-primary btn-block" id="btnLogin" onclick="LoginUser()">Log in</button>
+
+        </div>
+      </div>
+      <div class="clearfix">
+        @*<label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>*@
+        <a href=@Url.Action("ForgotPassword", "Account") class="pull-right">Forgot Password?</a>
+      </div>
+      @if (Model.Account.IsAdminUser == true)
+      {
+        
+      }
+    </form>
+    <p class="text-center">
+    <a href=@Url.Action("Register", "Account")>Create an Account</a>
+    </p>
+  </div>
+  <script type="text/javascript">
+     
+
+    function LoginUser() {
+      var dataToPost = $("#frmLogin").serializeObject();
+      $.ajax({
+        url: '/Account/Login',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        cache: false,
+        data: JSON.stringify(dataToPost),
+        method: 'POST',      
+       
+        success: function (data) {
+          //
+          window.location.replace('/AddressBook/Index');
+        },
+        error: function (data) {
+          //console.log("AJAX Loginerror!"); //
+        }
+      });
+    }
+        $(document).ready(function () {
+           
+          $.fn.serializeObject = function () {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function () {
+              if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                  o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+              } else {
+                o[this.name] = this.value || '';
+              }
+            });
+            return o;
+          };
+
+         
+
+          
+         
+
+        });
+
+
+
+
+
+  </script>
+
+</body>
+</html>
