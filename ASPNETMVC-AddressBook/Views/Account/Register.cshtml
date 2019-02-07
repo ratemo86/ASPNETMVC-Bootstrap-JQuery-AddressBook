@@ -3,7 +3,7 @@
   Layout = null;
 }
 
-@model ASPNETMVC_AddressBook.ViewModels.AccountViewModel
+@model ASPNETMVC_AddressBook.Models.AccountViewModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="~/Scripts/jquery.validate.min.js"></script>
+  <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
   <style type="text/css">
     body {
       color: #fff;
@@ -126,63 +129,68 @@
   </style>
 </head>
 <body>
-  <div class="signup-form">
-    <form action="/Account/Register" method="post">
-      <h2>Register</h2>
-      <p class="hint-text">Create your account. It's free and only takes a minute.</p>
-      <div class="form-group">
-        @Html.TextBoxFor(model => model.Account.UserName, new { @class = "form-control", @placeholder = "User Name" })
+  @using (Html.BeginForm())
+  {
+    @Html.AntiForgeryToken()
 
-      </div>
-      <div class="form-group">
-        <div class="row">
+    <div class="signup-form">
+      <form action="/Account/Register" method="post">
+        <h2>Register</h2>
+        <p class="hint-text">Create your account. It's free and only takes a minute.</p>
+        <div class="form-group">
+          @Html.TextBoxFor(model => model.Account.UserName, new { @class = "form-control", @placeholder = "User Name" })
 
-          <div class="col-xs-6">
-            @*<input type="text" class="form-control" name="first_name" placeholder="First Name" required="required">*@
-            @Html.TextBoxFor(model => model.Account.FirstName, new { @class = "form-control", @placeholder = "First Name" })
+        </div>
+        <div class="form-group">
+          <div class="row">
 
-          </div>
-          <div class="col-xs-6">
-            @*<input type="text" class="form-control" name="last_name" placeholder="Last Name" required="required">*@
-            @Html.TextBoxFor(model => model.Account.LastName, new { @class = "form-control", @placeholder = "Last Name" })
+            <div class="col-xs-6">
+              @*<input type="text" class="form-control" name="first_name" placeholder="First Name" required="required">*@
+              @Html.TextBoxFor(model => model.Account.FirstName, new { @class = "form-control", @placeholder = "First Name" })
 
+            </div>
+            <div class="col-xs-6">
+              @*<input type="text" class="form-control" name="last_name" placeholder="Last Name" required="required">*@
+              @Html.TextBoxFor(model => model.Account.LastName, new { @class = "form-control", @placeholder = "Last Name" })
+
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        @*<input type="email" class="form-control" name="email" placeholder="Email" required="required">*@
-        @Html.TextBoxFor(model => model.Account.Email, new { @class = "form-control", @placeholder = "Email" })
+        <div class="form-group">
+          @*<input type="email" class="form-control" name="email" placeholder="Email" required="required">*@
+          @Html.TextBoxFor(model => model.Account.Email, new { @class = "form-control", @placeholder = "Email" })
 
-      </div>
-      <div class="form-group">
-        @*<input type="password" class="form-control" name="password" placeholder="Password" required="required">*@
-        @Html.TextBoxFor(model => model.Account.Password, new { @class = "form-control", @placeholder = "Password" })
+        </div>
+        <div class="form-group">
+          @*<input type="password" class="form-control" name="password" placeholder="Password" required="required">*@
+          @Html.TextBoxFor(model => model.Account.Password, new { @class = "form-control", @placeholder = "Password" })
 
-      </div>
-      <div class="form-group">
-        @*<input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required="required">*@
-        @Html.TextBoxFor(model => model.Account.Password, new { @class = "form-control", @placeholder = "Confrim Password" })
+        </div>
+        <div class="form-group">
+          @*<input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required="required">*@
+          @Html.TextBoxFor(model => model.Account.Password, new { @class = "form-control", @placeholder = "Confrim Password" })
 
+        </div>
+        @*<div class="form-group">
+            <label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
+          </div>*@
+        <div class="form-group">
+          <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
+        </div>
+      </form>
+      <div>
+        Already have an account?
+        <button type="button" class="btn btn-info" onclick="GoToLogin()">Sign in</button>
       </div>
-      @*<div class="form-group">
-          <label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
-        </div>*@
-      <div class="form-group">
-        <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
-      </div>
-    </form>
-    <div>
-      Already have an account?
-      <button type="button" class="btn btn-info" onclick="GoToLogin()">Sign in</button>
     </div>
-  </div>
+  }
   <script type="text/javascript">
 
 
     function GoToLogin() {
       window.location.replace('/Account/Index');
     }
-  
+
 
 
 

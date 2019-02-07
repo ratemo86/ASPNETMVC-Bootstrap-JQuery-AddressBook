@@ -10,39 +10,67 @@ namespace ASPNETMVC_AddressBook.Controllers
   public class AccountController : Controller
   {
 
+    //Database: EF entities
     private IDCEntities IDCEntities = new IDCEntities();
-    // GET: Account
-    public ActionResult Index()
-    {
 
-     
+   /// <summary>
+   /// login view
+   /// </summary>
+   /// <returns></returns>
+    public ActionResult Index()  {
+       
       AccountViewModel accountViewModel = new AccountViewModel();
       accountViewModel.Account = new Account();
       return View("Index", accountViewModel);
       // return View("Index");
     }
 
+
+    /// <summary>
+    /// TODO: Logic to reset password
+    /// </summary>
+    /// <returns></returns>
     public ActionResult ResetPassword()
     {    
       return View("ResetPassword");
       // return View("Index");
     }
 
+    /// <summary>
+    /// TODO: Logic redirect user to request for new password
+    /// </summary>
+    /// <returns></returns>
     public ActionResult ForgotPassword()
     {
+
       return View("ForgotPassword");
       // return View("Index");
     }
+
+    /// <summary>
+    /// TODO: Logic to update existing user with new password
+    /// </summary>
+    /// <returns></returns>
     public ActionResult UpdateResetPassword()
     {     
       return View("Index");
     }
 
+
+    /// <summary>
+    /// Not implemented
+    /// </summary>
+    /// <returns></returns>
     public ActionResult RegisterNewUser()
     {
       return View("Index");
     }
 
+
+    /// <summary>
+    /// Update Acccount attributes other than password
+    /// </summary>
+    /// <returns></returns>
     public ActionResult UpdateUser()
     {
       return View("Index");
@@ -63,7 +91,7 @@ namespace ASPNETMVC_AddressBook.Controllers
       Account existingAccount = IDCEntities.Accounts.Find(accountViewModel.Account.UserName);
       if (existingAccount != null)
       {
-        //return RedirectToAction("Index", "AddressBook");
+        Session["UserName"] = existingAccount.UserName;
         return Json(accountViewModel);
       }
       else
@@ -96,6 +124,7 @@ namespace ASPNETMVC_AddressBook.Controllers
     [HttpGet]
     public ActionResult Register()
     {
+     
       AccountViewModel accountViewModel = new AccountViewModel();
       accountViewModel.Account = new Account();
       return View("Register", accountViewModel);

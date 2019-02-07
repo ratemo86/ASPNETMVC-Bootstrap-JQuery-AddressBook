@@ -4,7 +4,7 @@
   Layout = null;
 }
 
-@model ASPNETMVC_AddressBook.ViewModels.AccountViewModel
+@model ASPNETMVC_AddressBook.Models.AccountViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="~/Scripts/jquery.validate.min.js"></script>
+  <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
   <style type="text/css">
     .login-form {
       width: 340px;
@@ -45,98 +47,108 @@
   </style>
 </head>
 <body>
-  <div class="login-form container-fluid">
-    <form action="/Account/Index" method="post" id="frmLogin">
-      <h2 class="text-center">Log in</h2>
+  
+    <div class="login-form container-fluid">
+      <form method="post" id="frmLogin">
+        <h2 class="text-center">Log in</h2>
 
-      <div class="form-group">
-        <div class="col-md-12 input-group">
-          @Html.TextBoxFor(model => model.Account.UserName, new { @class = "form-control", @placeholder = "UserName" })
+        <div class="form-group">
+          <div class="col-md-12 input-group">
+            @Html.TextBoxFor(model => model.Account.UserName, new { @class = "form-control", @placeholder = "UserName" })
+            @Html.ValidationMessageFor(model => model.Account.UserName, "", new { @class = "text-danger" })
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <div class="col-md-12 input-group">
-          @Html.TextBoxFor(model => model.Account.Password, new { @class = "form-control", @placeholder = "Password" })
+        <div class="form-group">
+          <div class="col-md-12 input-group">
+            @Html.TextBoxFor(model => model.Account.Password, new { @class = "form-control", @placeholder = "Password" })
+            @Html.ValidationMessageFor(model => model.Account.Password, "", new { @class = "text-danger" })
+
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <div class="col-md-12 input-group">
-          @Html.TextBoxFor(model => model.Account.Email, new { @class = "form-control", @placeholder = "email" })
+        <div class="form-group">
+          <div class="col-md-12 input-group">
+            @Html.TextBoxFor(model => model.Account.Email, new { @class = "form-control", @placeholder = "email" })
+            @Html.ValidationMessageFor(model => model.Account.Email, "", new { @class = "text-danger" })
+
+          </div>
         </div>
-      </div>
-      <div class="form-group input-group">
-        <div class="col-md-12">
-          <button type="button" class="btn btn-primary btn-block" id="btnLogin" onclick="LoginUser()">Log in</button>
+        <div class="form-group">
+           @Html.LabelFor(model => model.Account.IsAdminUser)
+          <div class="col-md-12 input-group" >
+            @Html.CheckBoxFor(model => model.Account.IsAdminUser, new { @class = "form-control", @placeholder = "email" })
+            @Html.ValidationMessageFor(model => model.Account.IsAdminUser, "", new { @class = "text-danger" })
 
+          </div>
         </div>
-      </div>
-      <div class="clearfix">
-        @*<label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>*@
-        <a href=@Url.Action("ForgotPassword", "Account") class="pull-right">Forgot Password?</a>
-      </div>
-      @if (Model.Account.IsAdminUser == true)
-      {
-        
-      }
-    </form>
-    <p class="text-center">
-    <a href=@Url.Action("Register", "Account")>Create an Account</a>
-    </p>
-  </div>
-  <script type="text/javascript">
-     
+        <div class="form-group input-group">
+          <div class="col-md-12">
+            <button type="button" class="btn btn-primary btn-block" id="btnLogin" onclick="LoginUser()">Log in</button>
 
-    function LoginUser() {
-      var dataToPost = $("#frmLogin").serializeObject();
-      $.ajax({
-        url: '/Account/Login',
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        cache: false,
-        data: JSON.stringify(dataToPost),
-        method: 'POST',      
-       
-        success: function (data) {
-          //
-          window.location.replace('/AddressBook/Index');
-        },
-        error: function (data) {
-          //console.log("AJAX Loginerror!"); //
+          </div>
+        </div>
+        <div class="clearfix">
+          @*<label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>*@
+          <a href=@Url.Action("ForgotPassword", "Account") class="pull-right">Forgot Password?</a>
+        </div>
+        @if (Model.Account.IsAdminUser == true)
+        {
+
         }
-      });
-    }
-        $(document).ready(function () {
-           
-          $.fn.serializeObject = function () {
-            var o = {};
-            var a = this.serializeArray();
-            $.each(a, function () {
-              if (o[this.name] !== undefined) {
-                if (!o[this.name].push) {
-                  o[this.name] = [o[this.name]];
-                }
-                o[this.name].push(this.value || '');
-              } else {
-                o[this.name] = this.value || '';
-              }
-            });
-            return o;
-          };
+      </form>
+      <p class="text-center">
+        <a href=@Url.Action("Register", "Account")>Create an Account</a>
+      </p>
+    </div>
 
-         
-
-          
-         
-
+    <script type="text/javascript">
+      $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+          if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+              o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+          } else {
+            o[this.name] = this.value || '';
+          }
         });
+        return o;
+      };
+
+      function LoginUser() {
+        var dataToPost = $("#frmLogin").serializeObject();
+
+        console.log("Form data", dataToPost)
+        console.log("serialize form", $("#frmLogin").serialize())
+        $.ajax({
+          url: '/Account/Login',
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8',
+          cache: false,
+          data: JSON.stringify(dataToPost),
+          method: 'POST',
+
+          success: function (data) {
+            //
+            window.location.replace('/AddressBook/Index');
+          },
+          error: function (data) {
+            //console.log("AJAX Loginerror!"); //
+          }
+        });
+      }
+      $(document).ready(function () {
+      });
 
 
 
 
 
-  </script>
-
-</body>
+    </script>
+  
+  </body>
 </html>

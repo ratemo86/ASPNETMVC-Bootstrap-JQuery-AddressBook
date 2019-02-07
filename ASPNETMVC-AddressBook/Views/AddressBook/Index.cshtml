@@ -26,23 +26,26 @@
   <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
 </head>
 <body>
+  @using (Html.BeginForm("ResetPassword", "Account", FormMethod.Post))
+  {@Html.AntiForgeryToken()
   <div class="container-fluid" style="padding:10%;">
-    <i class="fa fa-user">font awesome
+    <i class="fa fa-user">
+      font awesome
     </i>
     <table id="example" class="display" width="100%"></table>
     @*<table id="example" class="display" style="width:100%">
-      <thead>
-        <tr>
-          <th>Company Name</th>
-          <th>Contact Name</th>
+        <thead>
+          <tr>
+            <th>Company Name</th>
+            <th>Contact Name</th>
 
-        </tr>
-      </thead>
+          </tr>
+        </thead>
 
-    </table>*@
+      </table>*@
 
   </div>
-  
+
   <script type="text/javascript">
 
     function SetDataTable(dataSet) {
@@ -65,28 +68,28 @@
           { title: "Email" }
         ]
       }
-      $('#example').DataTable(dt);   
+      $('#example').DataTable(dt);
     }
 
     function GetContacts() {
+      //console.log("AJAX FETCH!!!!!!!!!!!!")
       $.ajax({
         url: '/AddressBook/GetContacts',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         cache: false,
         method: 'GET',
-        type: 'GET',
         success: function (resp) {
           var tableData = [];
           for (var i = 0; i < resp.length; i++) {
             (function (index, responseData, tableData) {
-             
-             
+
+
               tableData.push(Object.values(responseData[index]))
               //console.log("Table Data  index= ", index)
               if (tableData.length == responseData.length) {
                 SetDataTable(tableData);
-               // console.log("Table Data = ", tableData)
+                // console.log("Table Data = ", tableData)
               }
             })(i, resp, tableData)
           }
@@ -98,15 +101,13 @@
 
     }
 
-    
-    $(document).ready(function () {
 
-     
+    $(document).ready(function () {
 
 
       GetContacts();
-      var hostUrl = "http://" + document.location.hostname + ":" + window.location.port;
-      var apiUrl = '/AddressBook/GetContacts/';
+      //var hostUrl = "http://" + document.location.hostname + ":" + window.location.port;
+      //var apiUrl = '/AddressBook/GetContacts/';
       //http://localhost:14260/AddressBook/GetContacts
 
       //$('#example').DataTable({
@@ -122,8 +123,8 @@
       //    dataSrc: ''
       //  }
 
-       
-          
+
+
       //});
 
     });
@@ -133,7 +134,7 @@
 
 
   </script>
-
+  }
 </body>
 </html>
 

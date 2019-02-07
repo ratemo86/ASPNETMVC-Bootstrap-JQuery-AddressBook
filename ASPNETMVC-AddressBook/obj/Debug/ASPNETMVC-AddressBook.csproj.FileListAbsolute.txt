@@ -86,3 +86,5 @@ C:\Users\Jairus\Documents\GitHub\ASPNETMVC-AddressBook\ASPNETMVC-AddressBook\obj
 C:\Users\Jairus\Documents\GitHub\ASPNETMVC-AddressBook\ASPNETMVC-AddressBook\obj\Debug\ASPNETMVC-AddressBook.dll
 C:\Users\Jairus\Documents\GitHub\ASPNETMVC-AddressBook\ASPNETMVC-AddressBook\obj\Debug\ASPNETMVC-AddressBook.pdb
 C:\Users\Jairus\Documents\GitHub\ASPNETMVC-AddressBook\ASPNETMVC-AddressBook\obj\Debug\ASPNETMVC-AddressBook.csprojAssemblyReference.cache
+C:\Users\Jairus\Documents\GitHub\ASPNETMVC-AddressBook\ASPNETMVC-AddressBook\bin\EntityFramework.SqlServer.dll
+C:\Users\Jairus\Documents\GitHub\ASPNETMVC-AddressBook\ASPNETMVC-AddressBook\bin\EntityFramework.SqlServer.xml
